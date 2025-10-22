@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Restoran Menyusi</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+<nav class="bg-white shadow fixed w-full z-20 top-0 left-0">
+  <div class="max-w-screen-xl mx-auto flex flex-wrap items-center justify-between p-4">
+    <a href="/" class="flex items-center space-x-3">
+      <span class="text-2xl font-semibold text-gray-800">Restoran Menyusi</span>
+    </a>
+
+    <ul class="flex flex-wrap space-x-6 font-medium">
+      <li><a href="/" class="text-blue-600 hover:text-blue-800">Barcha</a></li>
+      <li><a href="/kategoriya/?k=Asosiy taomlar" class="hover:text-blue-700">Asosiy taomlar</a></li>
+      <li><a href="/kategoriya/?k=Salatlar" class="hover:text-blue-700">Salatlar</a></li>
+      <li><a href="/kategoriya/?k=Shirinliklar" class="hover:text-blue-700">Shirinliklar</a></li>
+      <li><a href="/kategoriya/?k=Ichimliklar" class="hover:text-blue-700">Ichimliklar</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="max-w-6xl mx-auto px-4 py-28">
+  <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">{{ tab }}</h1>
+
+  {% if taomlar %}
+    {% for kategoriya in taomlar %}
+      <h2 class="text-2xl font-semibold text-gray-700 mb-4 border-b pb-2">{{ kategoriya.turi }}</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-12">
+        {% for taom in kategoriya.taomlar %}
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-4">
+          {% if taom.image %}
+          <img src="{{ taom.image.url }}" alt="{{ taom.nomi }}" class="w-full h-48 object-cover rounded-xl mb-4">
+          {% else %}
+          <div class="w-full h-48 bg-gray-200 rounded-xl flex items-center justify-center text-gray-500">
+            Rasm yo'q
+          </div>
+          {% endif %}
+
+          <h3 class="text-xl font-semibold text-gray-800 mb-1">{{ taom.nomi }}</h3>
+          <p class="text-gray-600 mb-2">💰 {{ taom.narxi }} $</p>
+
+          {% if taom.mavjudligi == "Ha" %}
+          <p class="text-green-600 font-medium">Ha bor aka hozir</p>
+          {% else %}
+          <p class="text-red-500 font-medium">Iyii tugab qolodi aka</p>
+          {% endif %}
+
+          {% if taom.tavsif %}
+          <p class="mt-3 text-gray-700 text-sm">{{ taom.tavsif }}</p>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-center text-gray-500 text-lg mt-10">Hozircha taomlar mavjud emas     </p>
+  {% endif %}
+</div>
+
+</body>
+</html>
